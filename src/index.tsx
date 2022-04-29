@@ -7,8 +7,9 @@ import { Config, DAppProvider, Mainnet } from '@usedapp/core';
 const config: Config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]: `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_PROJECT_ID}`,
+    [Mainnet.chainId]: 'https://main-light.eth.linkpool.io',
   },
+  networks: [Mainnet]
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
