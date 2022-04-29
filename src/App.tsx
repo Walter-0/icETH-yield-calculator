@@ -14,15 +14,12 @@ function App() {
   const { activateBrowserWallet, account, deactivate } = useEthers();
   const icethBalance = useTokenBalance(ICETH_TOKEN_CONTRACT, account);
   const isConnected = account !== undefined;
-  const currentLeverageRatio = 3.03;
-  //useGetLeverageRatio() / WEI_DECIMALS;
-  // const { postTotalPooledEther, preTotalPooledEther, timeElapsed } = useGetLastCompletedReportDelta();
-  const stETHYield = 3.88;
-  // (((postTotalPooledEther - preTotalPooledEther) * SECONDS_IN_A_YEAR) / (preTotalPooledEther * timeElapsed)) * 100; hmmmmm
-  const aWETHBorrowRate = 1.55;
-  //(useGetReserveData(WETH_TOKEN_CONTRACT) / RAY_DECIMALS) * 100;
+  const currentLeverageRatio = useGetLeverageRatio() / WEI_DECIMALS;
+  const { postTotalPooledEther, preTotalPooledEther, timeElapsed } = useGetLastCompletedReportDelta();
+  const stETHYield = (((postTotalPooledEther - preTotalPooledEther) * SECONDS_IN_A_YEAR) / (preTotalPooledEther * timeElapsed));
+  const aWETHBorrowRate = (useGetReserveData(WETH_TOKEN_CONTRACT) / RAY_DECIMALS);
 
-  const grossYield = stETHYield - aWETHBorrowRate * (currentLeverageRatio - 1) + stETHYield;
+  const grossYield = (((stETHYield - aWETHBorrowRate) * (currentLeverageRatio - 1)) + stETHYield) * 100;
 
   return (
     <div className="App">
